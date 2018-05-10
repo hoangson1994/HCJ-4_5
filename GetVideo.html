@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <img src="https://i.ytimg.com/vi/CY8E6N5Nzec/mqdefault.jpg" alt="" >
+    <p>adasfsdgfdfhjk</p>
+
+    <img src="https://i.ytimg.com/vi/CY8E6N5Nzec/mqdefault.jpg" alt="" >
+    <p>adasfsdgfdfhjk</p>
+<script>
+    function loadData() {
+        var req = new XMLHttpRequest();
+        req.open("GET","https://content.googleapis.com/youtube/v3/search?q=&videoEmbeddable=true&maxResults=12&type=video&videoSyndicated=true&part=snippet&pageToken=&key=AIzaSyBStdhzhkK8ne1tqsUz4A8j9axNi0NqE_M");
+        req.onload = function () {
+            var items = JSON.parse(this.responseText).items;
+            for(var i = 0; i < items.length; i++){
+                viewVideo(items[i], document.body)
+            }
+            console.log(JSON.parse(this.responseText));
+        };
+
+        req.onerror = function () {
+            console.log(JSON.parse(this.responseText));
+        };
+
+        req.send();
+    }
+
+    loadData();
+    // <img src="https://i.ytimg.com/vi/CY8E6N5Nzec/mqdefault.jpg" alt="" >
+    //     <p>adasfsdgfdfhjk</p>
+    function viewVideo(v, e) {
+        var imgE = document.createElement("img");
+        imgE.src = v.snippet.thumbnails.medium.url;
+        var pE = document.createElement("p");
+        pE.innerHTML = v.snippet.title;
+        e.appendChild(imgE);
+        e.appendChild(pE);
+    };
+
+
+</script>
+</body>
+</html>

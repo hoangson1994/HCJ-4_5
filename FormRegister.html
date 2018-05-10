@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<center>
+<form action="" name="register-form">
+
+    <div>
+        Username:
+        <input type="text" name="username" >
+        <p class=""></p>
+    </div>
+
+    Password:
+    <input type="password" name="password">
+    <br>
+
+    Full Name:
+    <input type="text" name="fullname" pattern="">
+    <br>
+
+    Email:
+    <input type="text" name="email">
+    <br>
+
+    Birthday:
+    <input type="text"   name="birthday">
+    <br>
+
+    Gender:
+    <input type="text" name="gender">
+    <br>
+
+    Avatar:
+    <input type="text" name="avatar">
+    <br>
+
+</form>
+    <button id="submit-btn">Submit</button>
+<script>
+
+    document.forms["register-form"]['username'].onkeyup = function () {
+
+        nghichChoi(this);
+    };
+    var doSubmit = function () {
+        var form = document.forms["register-form"];
+        var username = form['username'];
+
+        //username.onkeydown =
+        var spanUn = username.parentElement.querySelector("input").value = "test";
+        var password = form['password'].value;
+        var email = form['email'].value;
+        var fullname = form['fullname'].value;
+        var gender = form['gender'].value;
+        var birthDay = form['birthday'].value;
+        var avatar = form['avatar'].value;
+
+        var registerData = {
+            "data": {
+                "type": "Member",
+                "attributes": {
+                    "username": username.value,
+                    "password": password,
+                    "email": email,
+                    "fullName": fullname,
+                    "gender": gender,
+                    "birthDay": birthDay,
+                    "avatar": avatar
+                }
+            }
+        };
+
+        var req = new XMLHttpRequest();
+        req.open("POST", "https://youtube-api-challenger.appspot.com/members");
+        req.setRequestHeader("Content-Type", "application/json");
+        req.onload = function () {
+            var resT = this.responseText;
+            console.log(resT);
+        };
+
+        req.onerror = function () {
+            console.log(JSON.parse(this.responseText));
+        };
+        req.send(JSON.stringify(registerData));
+    }
+
+    document.getElementById("submit-btn").onclick = function(){
+        doSubmit();
+    }
+
+    // console.log(JSON.parse("[{\"errors\":[{\"code\":\"400\",\"title\":\"Thông tin không hợp lệ.\",\"detail\":\"Thông tin data không đúng định dạng.\"}]},\n" +
+    //     "{\"errors\":[{\"code\":\"400\",\"title\":\"Dữ liệu không hợp .\",\"detail\":\"Các trường username, email, password phải lớn hơn 7 ký tự và không tồn tại khoảng trắng.\"}]}]"));
+    function nghichChoi(ev) {
+        ev.parentElement.querySelector("span").innerHTML = ev.value;
+    }
+
+
+
+</script>
+</center>
+</body>
+</html>
